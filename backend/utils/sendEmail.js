@@ -15,9 +15,31 @@ const sendEmail = async (option) => {
         subject: options.subject,
         htmlContent: options.message
     };
+
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+            "api-key": BREVO_API_KEY,
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if(response.ok) {
+        console.log("Email sent successfully via Brevo:", result.messageId);
+} else {
+    console.error("Brevo API Key error:", result);
+    throw new Error(result.message || "Could not send email via Brevo");
 }
+    }
 
     catch (error) {
-
+        console.error("Brevo Email Error:", error);
+        throw new Error("Could not send email via brevo");
     }
-}
+};
+
+export default sendEmail;
