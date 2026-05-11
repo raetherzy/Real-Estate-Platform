@@ -19,7 +19,7 @@ export const register = async (req, res) => {
       100000 + Math.random() * 900000,
     ).toString();
 
-    const newUser = new User({
+    const user = await User.create({
       name,
       email,
       password: hashedPassword,
@@ -29,6 +29,12 @@ export const register = async (req, res) => {
     });
 
     try {
-    } catch (error) {}
-  } catch (error) {}
+
+    } 
+    catch (error) {
+
+    }
+  } catch (error) {
+    
+  }
 };
